@@ -6,6 +6,7 @@ public class MinHash {
     private static final long NEXT_PRIME = 2147483659L;
     private static final int NUMBER_OF_HASH_FUNCTIONS = 10;
     private static long[][] coefficients = new long[NUMBER_OF_HASH_FUNCTIONS][2];
+    private static final int SHINGLE_LENGTH = 5;
 
     public static void populateHashFunctions() {
         // generate coefficients of hash functions randomly
@@ -57,5 +58,30 @@ public class MinHash {
         }
 
         return result;
+    }
+
+    public static ArrayList<String> getShingleSet(String document) {
+        ArrayList<String> shingleSet = new ArrayList<>();
+
+        // check whether document length is already less than or equal to SHINGLE_LENGTH
+        if(document.length() <= SHINGLE_LENGTH) {
+            shingleSet.add(document);
+        }
+        else {
+            StringBuilder shingle = new StringBuilder();
+            int j=0;
+            for(int i=0; i<document.length(); i++) {
+                if(shingle.length() < SHINGLE_LENGTH) {
+                    shingle.append(document.charAt(i));
+                }
+                else {
+                    shingleSet.add(shingle.toString());
+                    shingle = new StringBuilder();
+                    i=j;
+                    j++;
+                }
+            }
+        }
+        return shingleSet;
     }
 }
