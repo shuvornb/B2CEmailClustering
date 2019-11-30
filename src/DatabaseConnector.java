@@ -7,20 +7,24 @@ public class DatabaseConnector {
     private final String user = "postgres";
     private final String password = "1234567t";
 
-    private Connection connect() {
-        Connection conn = null;
+    public Connection connect() {
+        Connection connection = null;
         try {
-            conn = DriverManager.getConnection(url, user, password);
+            connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return conn;
+        return connection;
     }
 
-    public static void main(String[] args) {
-        DatabaseConnector dc = new DatabaseConnector();
-        dc.connect();
+    public void close(Connection connection) {
+        try {
+            connection.close();
+            System.out.println("Connection closed successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
