@@ -10,7 +10,7 @@ public class DataPreprocessor {
 
     // read emails from file and store into email table of crusher_server database
     public static ArrayList<Email> importHTMLFiles() {
-        ArrayList<Email> emailArrayList = new ArrayList<>();
+        ArrayList<Email> emailArrayList = new ArrayList<Email>();
         File directory = new File("C:\\Users\\shuvo\\Desktop\\Dataset\\Takeout\\compressed");
         for (File file : directory.listFiles()) {
             Scanner scanner = null;

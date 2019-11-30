@@ -31,7 +31,7 @@ public class MinHash {
         System.out.println("Converting the shingleList to integerShingleList");
         System.out.println("=================================================");
 
-        ArrayList<Long> integerShingleList = new ArrayList<>();
+        ArrayList<Long> integerShingleList = new ArrayList<Long>();
         for(String element: shingleSet) {
             long integerShingle = element.hashCode();
             integerShingleList.add(integerShingle);
@@ -61,7 +61,7 @@ public class MinHash {
     }
 
     public static ArrayList<String> getShingleSet(String document) {
-        ArrayList<String> shingleSet = new ArrayList<>();
+        ArrayList<String> shingleSet = new ArrayList<String>();
 
         // check whether document length is already less than or equal to SHINGLE_LENGTH
         if(document.length() <= SHINGLE_LENGTH) {
