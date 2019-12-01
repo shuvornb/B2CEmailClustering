@@ -1,4 +1,5 @@
 public class Email {
+    public int id;
     public String date;
     public String from;
     public String to;
@@ -8,7 +9,8 @@ public class Email {
     public Email() {
     }
 
-    public Email(String date, String from, String to, String subject, String content) {
+    public Email(int id, String date, String from, String to, String subject, String content) {
+        this.id = id;
         this.date = date;
         this.from = from;
         this.to = to;
@@ -19,7 +21,8 @@ public class Email {
     @Override
     public String toString() {
         return "Email{" +
-                "date='" + date + '\'' +
+                "id=" + id +
+                ", date='" + date + '\'' +
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", subject='" + subject + '\'' +
