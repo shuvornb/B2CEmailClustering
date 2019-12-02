@@ -4,7 +4,7 @@ import java.util.Random;
 public class MinHash {
     private static final int MAX_SHINGLE_ID = Integer.MAX_VALUE;
     private static final long NEXT_PRIME = 2147483659L;
-    private static final int NUMBER_OF_HASH_FUNCTIONS = 10;
+    public static final int NUMBER_OF_HASH_FUNCTIONS = 10;
     private static long[][] coefficients = new long[NUMBER_OF_HASH_FUNCTIONS][2];
     private static final int SHINGLE_LENGTH = 5;
 
@@ -35,7 +35,7 @@ public class MinHash {
         for(String element: shingleSet) {
             long integerShingle = element.hashCode();
             integerShingleList.add(integerShingle);
-            System.out.println("Integer hashCode for element: \"" + element + "\": " + integerShingle + "");
+            //System.out.println("Integer hashCode for element: \"" + element + "\": " + integerShingle + "");
         }
 
         // For each element generate values using declared number of hash functions
@@ -83,5 +83,14 @@ public class MinHash {
             }
         }
         return shingleSet;
+    }
+
+    public static double getMatchingPercentage(String[] signature1, String[] signature2) {
+        double counter = 0;
+        for(int i=0; i<NUMBER_OF_HASH_FUNCTIONS; i++) {
+            if(signature1[i].equals(signature2[i])) counter++;
+        }
+
+        return (counter/NUMBER_OF_HASH_FUNCTIONS)*100;
     }
 }
