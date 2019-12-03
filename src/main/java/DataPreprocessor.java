@@ -8,13 +8,11 @@ import java.util.Scanner;
 
 public class DataPreprocessor {
 
-    private static final String FILE_DIRECTORY = "C:\\Studies\\COP 5725 (Advanced Database Systems)\\Project\\Dataset\\Compressed Emails";
-
     // read emails from file and store into email table of crusher_server database
-    public static ArrayList<Email> importHTMLFiles() {
-        ArrayList<Email> emailArrayList = new ArrayList<Email>();
+    public static ArrayList<Email> importHTMLFiles(String directoryPath) {
+        ArrayList<Email> emails = new ArrayList<Email>();
         int fileCounter = 1;
-        File directory = new File(FILE_DIRECTORY);
+        File directory = new File(directoryPath);
         for (File file : directory.listFiles()) {
             Scanner scanner = null;
             try {
@@ -24,7 +22,7 @@ public class DataPreprocessor {
                     rawEmail.append(scanner.nextLine());
                 }
                 Email email = getProcessedEmailFromRawEmail(rawEmail.toString());
-                emailArrayList.add(email);
+                emails.add(email);
                 System.out.println("Email #" + fileCounter + ": " + email.simpleToString());
                 fileCounter++;
 
@@ -34,7 +32,42 @@ public class DataPreprocessor {
             scanner.close();
         }
 
-        return emailArrayList;
+        System.out.println("Successfully imported #" + emails.size() + " emails.");
+        return emails;
+    }
+
+    public static void storeProcessedEmails(ArrayList<Email> emails) {
+        DatabaseConnector dc = new DatabaseConnector();
+        Connection connection = dc.connect();
+
+        String query = "INSERT INTO email(date, sender, receiver, subject, description) "
+                + "VALUES(?,?,?,?,?)";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            int count = 0;
+
+            for (Email email : emails) {
+                statement.setString(1, email.date);
+                statement.setString(2, email.from);
+                statement.setString(3, email.to);
+                statement.setString(4, email.subject);
+                statement.setString(5, email.content);
+
+                statement.addBatch();
+                count++;
+                // execute every 100 rows or less
+                if (count % 100 == 0 || count == emails.size()) {
+                    statement.executeBatch();
+                }
+            }
+
+            System.out.println("Successfully stored #" + count + " emails.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        dc.close(connection);
     }
 
     private static Email getProcessedEmailFromRawEmail(String rawEmail) {
@@ -74,39 +107,5 @@ public class DataPreprocessor {
         email.content = rawEmail;
 
         return email;
-    }
-
-    public static void storeProcessedEmails(ArrayList<Email> emails) {
-        DatabaseConnector dc = new DatabaseConnector();
-        Connection connection = dc.connect();
-
-        String query = "INSERT INTO email(date, sender, receiver, subject, description) "
-                + "VALUES(?,?,?,?,?)";
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            int count = 0;
-
-            for (Email email : emails) {
-                statement.setString(1, email.date);
-                statement.setString(2, email.from);
-                statement.setString(3, email.to);
-                statement.setString(4, email.subject);
-                statement.setString(5, email.content);
-
-                statement.addBatch();
-                count++;
-                // execute every 100 rows or less
-                if (count % 100 == 0 || count == emails.size()) {
-                    statement.executeBatch();
-                }
-            }
-
-            System.out.println("Successfully stored #" + count + " emails.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        dc.close(connection);
     }
 }
