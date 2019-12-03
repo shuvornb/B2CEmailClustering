@@ -54,8 +54,9 @@ public class MinHash {
         System.out.println("The Signature");
         System.out.println("==============");
         for(int i=0; i< NUMBER_OF_HASH_FUNCTIONS; i++) {
-            System.out.print(result[i]);
+            System.out.print(result[i] + " ");
         }
+        System.out.print("\n");
 
         return result;
     }
