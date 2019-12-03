@@ -8,10 +8,13 @@ import java.util.Scanner;
 
 public class DataPreprocessor {
 
+    private static final String FILE_DIRECTORY = "C:\\Studies\\COP 5725 (Advanced Database Systems)\\Project\\Dataset\\Compressed Emails";
+
     // read emails from file and store into email table of crusher_server database
     public static ArrayList<Email> importHTMLFiles() {
         ArrayList<Email> emailArrayList = new ArrayList<Email>();
-        File directory = new File("C:\\Users\\shuvo\\Desktop\\Dataset\\Takeout\\compressed");
+        int fileCounter = 1;
+        File directory = new File(FILE_DIRECTORY);
         for (File file : directory.listFiles()) {
             Scanner scanner = null;
             try {
@@ -20,16 +23,15 @@ public class DataPreprocessor {
                 while (scanner.hasNextLine()) {
                     rawEmail.append(scanner.nextLine());
                 }
-                emailArrayList.add(getProcessedEmailFromRawEmail(rawEmail.toString()));
+                Email email = getProcessedEmailFromRawEmail(rawEmail.toString());
+                emailArrayList.add(email);
+                System.out.println("Email #" + fileCounter + ": " + email.simpleToString());
+                fileCounter++;
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             scanner.close();
-        }
-
-        for (Email email: emailArrayList) {
-            System.out.println(email.toString());
         }
 
         return emailArrayList;
@@ -99,6 +101,8 @@ public class DataPreprocessor {
                     statement.executeBatch();
                 }
             }
+
+            System.out.println("Successfully stored #" + count + " emails.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
