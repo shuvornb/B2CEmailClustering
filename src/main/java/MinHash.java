@@ -2,16 +2,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MinHash {
-
+    public static final int MAX_SHINGLE_ID = Integer.MAX_VALUE;
+    public static final long NEXT_PRIME = 2147483659L;
     public static long[][] coefficients = new long[Constants.NUMBER_OF_HASH_FUNCTIONS][2];
+
     public static void populateHashFunctions() {
         // generate coefficients of hash functions randomly
         System.out.println("Generating coefficients");
         System.out.println("=======================");
         Random random = new Random();
         for(int i=0; i< Constants.NUMBER_OF_HASH_FUNCTIONS; i++) {
-            coefficients[i][0] = random.nextInt(Constants.MAX_SHINGLE_ID);
-            coefficients[i][1] = random.nextInt(Constants.MAX_SHINGLE_ID);
+            coefficients[i][0] = random.nextInt(MAX_SHINGLE_ID);
+            coefficients[i][1] = random.nextInt(MAX_SHINGLE_ID);
         }
 
         for(int i=0; i< Constants.NUMBER_OF_HASH_FUNCTIONS; i++) {
@@ -40,7 +42,7 @@ public class MinHash {
         for(int i=0; i<Constants.NUMBER_OF_HASH_FUNCTIONS; i++) {
             long minHashValue = Integer.MAX_VALUE;
             for(long element: integerShingleList) {
-                long componentValue = (coefficients[i][0]*element + coefficients[i][1]) % Constants.NEXT_PRIME;
+                long componentValue = (coefficients[i][0]*element + coefficients[i][1]) % NEXT_PRIME;
                 if(componentValue < minHashValue) minHashValue = componentValue;
             }
             result[i] = minHashValue;
