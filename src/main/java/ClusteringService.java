@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ClusteringService {
-    private static final double MATCHING_THRESHOLD = 50.0;
 
     public static void clusterSingleEmail(Email email) {
 
@@ -18,7 +17,7 @@ public class ClusteringService {
         long[] minhashSignatureLongArray = MinHash.generateMinHashValues(shingleSet);
 
         // convert long array into string array
-        String[] minhashSignatureStringArray = new String[MinHash.NUMBER_OF_HASH_FUNCTIONS];
+        String[] minhashSignatureStringArray = new String[Constants.NUMBER_OF_HASH_FUNCTIONS];
         for(int i=0; i<minhashSignatureLongArray.length; i++) {
             minhashSignatureStringArray[i] = String.valueOf(minhashSignatureLongArray[i]);
         }
@@ -82,7 +81,7 @@ public class ClusteringService {
 
     private static Cluster findMatch(ArrayList<Cluster> clusters, String[] minhashSignatureStringArray) {
         for (Cluster cluster: clusters) {
-            if(MinHash.getMatchingPercentage(cluster.minhashSignature, minhashSignatureStringArray) >= MATCHING_THRESHOLD)
+            if(MinHash.getMatchingPercentage(cluster.minhashSignature, minhashSignatureStringArray) >= Constants.MATCHING_THRESHOLD)
                 return cluster;
         }
         return null;
