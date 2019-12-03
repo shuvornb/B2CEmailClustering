@@ -27,9 +27,9 @@ public class MinHash {
     public static long[] generateMinHashValues(ArrayList<String> shingleSet) {
         // generate integer value for each shingle in the list
 
-        System.out.println("\n");
-        System.out.println("Converting the shingleList to integerShingleList");
-        System.out.println("=================================================");
+        //System.out.println("\n");
+        //System.out.println("Converting the shingleList to integerShingleList");
+        //System.out.println("=================================================");
 
         ArrayList<Long> integerShingleList = new ArrayList<Long>();
         for(String element: shingleSet) {
