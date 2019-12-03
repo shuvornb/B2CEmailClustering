@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +56,7 @@ public class ClusteringService {
         }
     }
 
-    private static ArrayList<Cluster> readAllExistingCluster(Connection bulkReadConnection) {
+    public static ArrayList<Cluster> readAllExistingCluster(Connection bulkReadConnection) {
         ArrayList<Cluster> clusters = new ArrayList<Cluster>();
         String bulkReadQuery = "SELECT * FROM cluster";
         try {
@@ -124,6 +128,24 @@ public class ClusteringService {
                 updateCLusterStatement.execute();
 
             } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void writeUsingOutputStream(String content, String filePath) {
+        OutputStream os = null;
+        try {
+            File file = new File(filePath);
+            file.getParentFile().mkdirs();
+            os = new FileOutputStream(file);
+            os.write(content.getBytes(), 0, content.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                os.close();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
