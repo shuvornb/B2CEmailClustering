@@ -23,9 +23,11 @@ Before running the software there are some parameters that needed to be configur
 ## How to run the software
 * Open the project with an IDE (Eclipse, IntelliJ IDEA). Since it's a Maven project it'll download the dependencies automatically.
 * Run the main function in Main class.
-* You will encounter a menu in command line which is similar to this- https://drive.google.com/open?id=1AYdYo2Df4dutah3ZFaJbMeZRjhGaFjVr
-* While importing data by pressing '1' you will be prompted to provide directory path (which you have saved earlier) of your data.
-* If you press '2', it will cluster all the imported emails.
-* You can directly cluster a single email by pressing '3' and providing the directory path for that file.
-* By pressing '4' you can write all the clusters in html files to view them in browser and have an idea about how clustering worked.
+
+## How to use the software
+The menu in the console looks like this - https://drive.google.com/open?id=1AYdYo2Df4dutah3ZFaJbMeZRjhGaFjVr
+* Press '1' to import data.
+* Press '2', to cluster all the imported emails.
+* Press '3' to directly cluster a single email.
+* Press '4' to write all the clusters in html files to view them in a browser.
 * Press '0' to exit te program anytime.
