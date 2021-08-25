@@ -21,7 +21,8 @@ Before running the software there are some parameters that needed to be configur
 * __SHINGLE_LENGTH__: Length of each shingle. It is used to convert an email into set of shingles.
 
 ## How to run the software
-* Open the project with an IDE (Eclipse, IntelliJ IDEA). Since it's a Maven project it'll download the dependencies automatically.
+* Open the project with an IDE (Eclipse, IntelliJ IDEA). 
+* Since it's a Maven project it'll download the dependencies automatically.
 * Run the main function in Main class.
 
 ## How to use the software
