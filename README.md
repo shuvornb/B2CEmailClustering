@@ -1,4 +1,4 @@
-# CrusherClusteringService
+# B2CEmailClustering
 
 ## Prerequisite
 * Install PostgreSQL database. You can find installer of various versions for your desired OS here-
